@@ -7,6 +7,8 @@ provider:
   lambdaHashingVersion: 20201221
   iam:
     role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+  environment:
+    sqs_url: !Sub https://sqs.us-east-1.amazonaws.com/${AWS::AccountId}/espera-entrega
   eventBridge:
     useCloudFormation: true
 
@@ -20,8 +22,9 @@ functions:
           pattern:
             source:
               - com.pizza.status
-  sqsHandler:
-    handler: handler.sqsHandler
+              
+  enviaSqsHandler:
+    handler: handler.enviaSqsHandler
     events:
       - eventBridge:
           eventBus:
@@ -34,3 +37,11 @@ functions:
             detail:
               status:
                 - pronto
+                
+  # leSqsHandler:
+  #   handler: handler.leSqsHandler
+  #   events:
+  #     - sqs:
+  #         arn: arn:aws:sqs:us-east-1:${AWS::AccountId}:espera-entrega
+  #         batchSize: 10
+  #         maximumBatchingWindow: 60

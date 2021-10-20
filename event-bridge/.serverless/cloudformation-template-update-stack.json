@@ -1,0 +1,379 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "ServerlessDeploymentBucketPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Properties": {
+        "Bucket": {
+          "Ref": "ServerlessDeploymentBucket"
+        },
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "s3:*",
+              "Effect": "Deny",
+              "Principal": "*",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      },
+                      "/*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":s3:::",
+                      {
+                        "Ref": "ServerlessDeploymentBucket"
+                      }
+                    ]
+                  ]
+                }
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": false
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "DynamoHandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/event-filter-dev-dynamoHandler"
+      }
+    },
+    "EnviaSqsHandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/event-filter-dev-enviaSqsHandler"
+      }
+    },
+    "LeSqsHandlerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/event-filter-dev-leSqsHandler"
+      }
+    },
+    "DynamoHandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/event-filter/dev/1634700336874-2021-10-20T03:25:36.874Z/event-filter.zip"
+        },
+        "Handler": "handler.dynamoHandler",
+        "Runtime": "python3.7",
+        "FunctionName": "event-filter-dev-dynamoHandler",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "sqs_url": {
+              "Fn::Sub": "https://sqs.us-east-1.amazonaws.com/${AWS::AccountId}/espera-entrega"
+            }
+          }
+        },
+        "Role": {
+          "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/LabRole"
+        }
+      },
+      "DependsOn": [
+        "DynamoHandlerLogGroup"
+      ]
+    },
+    "EnviaSqsHandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/event-filter/dev/1634700336874-2021-10-20T03:25:36.874Z/event-filter.zip"
+        },
+        "Handler": "handler.enviaSqsHandler",
+        "Runtime": "python3.7",
+        "FunctionName": "event-filter-dev-enviaSqsHandler",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "sqs_url": {
+              "Fn::Sub": "https://sqs.us-east-1.amazonaws.com/${AWS::AccountId}/espera-entrega"
+            }
+          }
+        },
+        "Role": {
+          "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/LabRole"
+        }
+      },
+      "DependsOn": [
+        "EnviaSqsHandlerLogGroup"
+      ]
+    },
+    "LeSqsHandlerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/event-filter/dev/1634700336874-2021-10-20T03:25:36.874Z/event-filter.zip"
+        },
+        "Handler": "handler.leSqsHandler",
+        "Runtime": "python3.7",
+        "FunctionName": "event-filter-dev-leSqsHandler",
+        "MemorySize": 1024,
+        "Timeout": 6,
+        "Environment": {
+          "Variables": {
+            "sqs_url": {
+              "Fn::Sub": "https://sqs.us-east-1.amazonaws.com/${AWS::AccountId}/espera-entrega"
+            }
+          }
+        },
+        "Role": {
+          "Fn::Sub": "arn:aws:iam::${AWS::AccountId}:role/LabRole"
+        }
+      },
+      "DependsOn": [
+        "LeSqsHandlerLogGroup"
+      ]
+    },
+    "DynamoHandlerLambdaVersionAaf6rEbynpZONQd1zqDD1WRClAvyrpdP9ZqFJY2WrY": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "DynamoHandlerLambdaFunction"
+        },
+        "CodeSha256": "0Gfve5ybwsMRT3WEbYUuC/2vGE/pIqVJoF88Q44iPLc="
+      }
+    },
+    "EnviaSqsHandlerLambdaVersionHJt8JjlNvycT4lHpmexSGfS2GQ62JgAEQCM90Vpgbw": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "EnviaSqsHandlerLambdaFunction"
+        },
+        "CodeSha256": "0Gfve5ybwsMRT3WEbYUuC/2vGE/pIqVJoF88Q44iPLc="
+      }
+    },
+    "LeSqsHandlerLambdaVersionTlzuw2ag0ekWWVmfERbOsu0SVCxcZ8F1Ss7ZfNJSCE": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "LeSqsHandlerLambdaFunction"
+        },
+        "CodeSha256": "0Gfve5ybwsMRT3WEbYUuC/2vGE/pIqVJoF88Q44iPLc="
+      }
+    },
+    "EventfilterdevdynamoHandlerrule1EventBridgeRule": {
+      "Type": "AWS::Events::Rule",
+      "Properties": {
+        "EventBusName": "pizzaria",
+        "EventPattern": "{\"source\":[\"com.pizza.status\"]}",
+        "Name": "event-filter-dev-dynamoHandler-rule-1",
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "DynamoHandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Id": "event-filter-dev-dynamoHandler-rule-1-target"
+          }
+        ]
+      }
+    },
+    "DynamoHandlerEventBridgeLambdaPermission1": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "DynamoHandlerLambdaFunction"
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            ":",
+            [
+              "arn",
+              {
+                "Ref": "AWS::Partition"
+              },
+              "events",
+              {
+                "Ref": "AWS::Region"
+              },
+              {
+                "Ref": "AWS::AccountId"
+              },
+              {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "rule",
+                    "pizzaria",
+                    "event-filter-dev-dynamoHandler-rule-1"
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "EventfilterdevenviaSqsHandlerrule1EventBridgeRule": {
+      "Type": "AWS::Events::Rule",
+      "Properties": {
+        "EventBusName": "pizzaria",
+        "EventPattern": "{\"source\":[\"com.pizza.status\"],\"detail-type\":[\"Alteracao Pizza\"],\"detail\":{\"status\":[\"pronto\"]}}",
+        "Name": "event-filter-dev-enviaSqsHandler-rule-1",
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "EnviaSqsHandlerLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Id": "event-filter-dev-enviaSqsHandler-rule-1-target"
+          }
+        ]
+      }
+    },
+    "EnviaSqsHandlerEventBridgeLambdaPermission1": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Ref": "EnviaSqsHandlerLambdaFunction"
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            ":",
+            [
+              "arn",
+              {
+                "Ref": "AWS::Partition"
+              },
+              "events",
+              {
+                "Ref": "AWS::Region"
+              },
+              {
+                "Ref": "AWS::AccountId"
+              },
+              {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "rule",
+                    "pizzaria",
+                    "event-filter-dev-enviaSqsHandler-rule-1"
+                  ]
+                ]
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "LeSqsHandlerEventSourceMappingSQSEsperaentrega": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [],
+      "Properties": {
+        "BatchSize": 10,
+        "MaximumBatchingWindowInSeconds": 60,
+        "EventSourceArn": "arn:aws:sqs:us-east-1:${AWS::AccountId}:espera-entrega",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "LeSqsHandlerLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Enabled": true
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      },
+      "Export": {
+        "Name": "sls-event-filter-dev-ServerlessDeploymentBucketName"
+      }
+    },
+    "DynamoHandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "DynamoHandlerLambdaVersionAaf6rEbynpZONQd1zqDD1WRClAvyrpdP9ZqFJY2WrY"
+      },
+      "Export": {
+        "Name": "sls-event-filter-dev-DynamoHandlerLambdaFunctionQualifiedArn"
+      }
+    },
+    "EnviaSqsHandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "EnviaSqsHandlerLambdaVersionHJt8JjlNvycT4lHpmexSGfS2GQ62JgAEQCM90Vpgbw"
+      },
+      "Export": {
+        "Name": "sls-event-filter-dev-EnviaSqsHandlerLambdaFunctionQualifiedArn"
+      }
+    },
+    "LeSqsHandlerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "LeSqsHandlerLambdaVersionTlzuw2ag0ekWWVmfERbOsu0SVCxcZ8F1Ss7ZfNJSCE"
+      },
+      "Export": {
+        "Name": "sls-event-filter-dev-LeSqsHandlerLambdaFunctionQualifiedArn"
+      }
+    }
+  }
+}

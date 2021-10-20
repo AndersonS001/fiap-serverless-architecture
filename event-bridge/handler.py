@@ -5,6 +5,7 @@ from baseDAO import BaseDAO
 import random
 from datetime import datetime
 from sqsHandler import SqsHandler
+from env import Variables
 
     
 def dynamoHandler(event, context):
@@ -19,15 +20,29 @@ def dynamoHandler(event, context):
 
     return True
 
-def sqsHandler(event, context):
+def enviaSqsHandler(event, context):
     
     print("event: {}".format(json.dumps(event)))
     
-    sqs = SqsHandler("https://sqs.us-east-1.amazonaws.com/817936088622/espera-entrega")
+    env = Variables()
+    sqs = SqsHandler(env.get_sqs_url())
     
     detail = event["detail"]
     detail["time"] = event["time"]
     
     sqs.send(json.dumps(detail))
+
+    return True
+
+def leSqsHandler(event, context):
+    
+    print("event: {}".format(json.dumps(event)))
+    
+    env = Variables()
+    sqs = SqsHandler(env.get_sqs_url())
+    
+    for record in event["Records"]:
+        payload=record["body"]
+        print(json.dumps(payload))
 
     return True
