@@ -1,0 +1,36 @@
+service: event-filter
+
+frameworkVersion: '2'
+provider:
+  name: aws
+  runtime: python3.7
+  lambdaHashingVersion: 20201221
+  iam:
+    role: !Sub arn:aws:iam::${AWS::AccountId}:role/LabRole
+  eventBridge:
+    useCloudFormation: true
+
+functions:
+  dynamoHandler:
+    handler: handler.dynamoHandler
+    events:
+      - eventBridge:
+          eventBus:
+            - arn:aws:events:us-east-1:${AWS::AccountId}:event-bus/pizzaria
+          pattern:
+            source:
+              - com.pizza.status
+  sqsHandler:
+    handler: handler.sqsHandler
+    events:
+      - eventBridge:
+          eventBus:
+            - arn:aws:events:us-east-1:${AWS::AccountId}:event-bus/pizzaria
+          pattern:
+            source:
+              - com.pizza.status
+            detail-type:
+              - Alteracao Pizza
+            detail:
+              status:
+                - pronto
