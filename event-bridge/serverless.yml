@@ -38,10 +38,18 @@ functions:
               status:
                 - pronto
                 
-  # leSqsHandler:
-  #   handler: handler.leSqsHandler
-  #   events:
-  #     - sqs:
-  #         arn: arn:aws:sqs:us-east-1:${AWS::AccountId}:espera-entrega
-  #         batchSize: 10
-  #         maximumBatchingWindow: 60
+  leSqsHandler:
+    handler: handler.leSqsHandler
+    events:
+      - sqs:
+          arn:
+            Fn::Join:
+              - ':'
+              - - arn
+                - aws
+                - sqs
+                - Ref: AWS::Region
+                - Ref: AWS::AccountId
+                - espera-entrega
+          batchSize: 1
+          maximumBatchingWindow: 60
