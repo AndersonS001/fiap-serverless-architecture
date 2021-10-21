@@ -1,6 +1,6 @@
 # Trabalho Final
 
-![](img/arquitetura.png)
+![]![arquitetura](https://user-images.githubusercontent.com/31575796/138193231-bd6f9029-6bcd-479c-a8cf-c83dcf314320.png)
 
 
 
