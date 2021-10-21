@@ -21,13 +21,12 @@ Nessa arquitetura um barramento do eventBridge vai receber todos os eventos de u
       2. Nome: espera-entrega
 2. Crie via Serverless Framework os lambdas e regras no barramento de eventos do passo anterior, cada um executando sua respectiva função conforme descrito na arquitetura.
 3. Crie o lambda que receberá as mensagens vindas da fila eventos-pizzaria em batch de 1 mensagem cada.
-4. A entrega consiste em todos os arquivos de programação e configuração gerados para provisionar os lambdas e regras do eventBridge. Faça um zip dos mesmos e submeta no portal fiap. Caso o código esteja no git é só fazer o download do zip direto no github.
 
 
 ### Informações e dicas
 
 1. Pode escolher qualquer linguagem suportada pelo lambad para resolver o exercicio. Todos os exemplos estão em python3
-2. Para testar o seu exercicio esta disponibilizado nesta pasta um arquivo chamado putEventsPizzaria.py que irá inserir eventos de todos os tipos para o barramento escolhido.
+2. Para testar o seu exercicio esta disponibilizado nesta pasta um arquivo chamado putEvents.py que irá inserir eventos de todos os tipos para o barramento escolhido.
 3. Exemplo de json do evento do eventBridge:
    ``` json
    {
@@ -55,4 +54,3 @@ Nessa arquitetura um barramento do eventBridge vai receber todos os eventos de u
       "time": "2021-09-23T15:35:41Z"
    }
    ```
-5. Os códigos para inserir um item no DynamoDB e no SQS estão disponiveis no tutorial de cada tema.
