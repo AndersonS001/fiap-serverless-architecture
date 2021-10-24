@@ -122,7 +122,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/event-filter/dev/1634703848683-2021-10-20T04:24:08.683Z/event-filter.zip"
+                "S3Key": "serverless/event-filter/dev/1635112362876-2021-10-24T21:52:42.876Z/event-filter.zip"
               },
               "Handler": "handler.dynamoHandler",
               "Runtime": "python3.7",
@@ -151,7 +151,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/event-filter/dev/1634703848683-2021-10-20T04:24:08.683Z/event-filter.zip"
+                "S3Key": "serverless/event-filter/dev/1635112362876-2021-10-24T21:52:42.876Z/event-filter.zip"
               },
               "Handler": "handler.enviaSqsHandler",
               "Runtime": "python3.7",
@@ -180,7 +180,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/event-filter/dev/1634703848683-2021-10-20T04:24:08.683Z/event-filter.zip"
+                "S3Key": "serverless/event-filter/dev/1635112362876-2021-10-24T21:52:42.876Z/event-filter.zip"
               },
               "Handler": "handler.leSqsHandler",
               "Runtime": "python3.7",
@@ -202,34 +202,34 @@
               "LeSqsHandlerLogGroup"
             ]
           },
-          "DynamoHandlerLambdaVersionAaf6rEbynpZONQd1zqDD1WRClAvyrpdP9ZqFJY2WrY": {
+          "DynamoHandlerLambdaVersionNn5zGdyYJ6FSMuljNRKbCOPcWP6ATOBCrJxY88w9glQ": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "DynamoHandlerLambdaFunction"
               },
-              "CodeSha256": "0Gfve5ybwsMRT3WEbYUuC/2vGE/pIqVJoF88Q44iPLc="
+              "CodeSha256": "pL4bs9beK1/qFEae61RDV07vhZ72/O6rJ5gHdtiaIqQ="
             }
           },
-          "EnviaSqsHandlerLambdaVersionHJt8JjlNvycT4lHpmexSGfS2GQ62JgAEQCM90Vpgbw": {
+          "EnviaSqsHandlerLambdaVersionOMi0hXRm2RjdVznOIqRzYfaVux9nzFjWLm0xxmPJqI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "EnviaSqsHandlerLambdaFunction"
               },
-              "CodeSha256": "0Gfve5ybwsMRT3WEbYUuC/2vGE/pIqVJoF88Q44iPLc="
+              "CodeSha256": "pL4bs9beK1/qFEae61RDV07vhZ72/O6rJ5gHdtiaIqQ="
             }
           },
-          "LeSqsHandlerLambdaVersionTlzuw2ag0ekWWVmfERbOsu0SVCxcZ8F1Ss7ZfNJSCE": {
+          "LeSqsHandlerLambdaVersiongPzuhPKcj6cv2Jcx62QuqR1VHOcPOoxtJlK7OJIsk4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "LeSqsHandlerLambdaFunction"
               },
-              "CodeSha256": "0Gfve5ybwsMRT3WEbYUuC/2vGE/pIqVJoF88Q44iPLc="
+              "CodeSha256": "pL4bs9beK1/qFEae61RDV07vhZ72/O6rJ5gHdtiaIqQ="
             }
           },
           "EventfilterdevdynamoHandlerrule1EventBridgeRule": {
@@ -353,7 +353,6 @@
             "DependsOn": [],
             "Properties": {
               "BatchSize": 1,
-              "MaximumBatchingWindowInSeconds": 60,
               "EventSourceArn": {
                 "Fn::Join": [
                   ":",
@@ -393,7 +392,7 @@
           "DynamoHandlerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "DynamoHandlerLambdaVersionAaf6rEbynpZONQd1zqDD1WRClAvyrpdP9ZqFJY2WrY"
+              "Ref": "DynamoHandlerLambdaVersionNn5zGdyYJ6FSMuljNRKbCOPcWP6ATOBCrJxY88w9glQ"
             },
             "Export": {
               "Name": "sls-event-filter-dev-DynamoHandlerLambdaFunctionQualifiedArn"
@@ -402,7 +401,7 @@
           "EnviaSqsHandlerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "EnviaSqsHandlerLambdaVersionHJt8JjlNvycT4lHpmexSGfS2GQ62JgAEQCM90Vpgbw"
+              "Ref": "EnviaSqsHandlerLambdaVersionOMi0hXRm2RjdVznOIqRzYfaVux9nzFjWLm0xxmPJqI"
             },
             "Export": {
               "Name": "sls-event-filter-dev-EnviaSqsHandlerLambdaFunctionQualifiedArn"
@@ -411,7 +410,7 @@
           "LeSqsHandlerLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "LeSqsHandlerLambdaVersionTlzuw2ag0ekWWVmfERbOsu0SVCxcZ8F1Ss7ZfNJSCE"
+              "Ref": "LeSqsHandlerLambdaVersiongPzuhPKcj6cv2Jcx62QuqR1VHOcPOoxtJlK7OJIsk4"
             },
             "Export": {
               "Name": "sls-event-filter-dev-LeSqsHandlerLambdaFunctionQualifiedArn"
@@ -525,7 +524,7 @@
         "timeout": 6,
         "runtime": "python3.7",
         "vpc": {},
-        "versionLogicalId": "DynamoHandlerLambdaVersionAaf6rEbynpZONQd1zqDD1WRClAvyrpdP9ZqFJY2WrY"
+        "versionLogicalId": "DynamoHandlerLambdaVersionNn5zGdyYJ6FSMuljNRKbCOPcWP6ATOBCrJxY88w9glQ"
       },
       "enviaSqsHandler": {
         "handler": "handler.enviaSqsHandler",
@@ -555,7 +554,7 @@
         "timeout": 6,
         "runtime": "python3.7",
         "vpc": {},
-        "versionLogicalId": "EnviaSqsHandlerLambdaVersionHJt8JjlNvycT4lHpmexSGfS2GQ62JgAEQCM90Vpgbw"
+        "versionLogicalId": "EnviaSqsHandlerLambdaVersionOMi0hXRm2RjdVznOIqRzYfaVux9nzFjWLm0xxmPJqI"
       },
       "leSqsHandler": {
         "handler": "handler.leSqsHandler",
@@ -579,8 +578,7 @@
                   ]
                 ]
               },
-              "batchSize": 1,
-              "maximumBatchingWindow": 60
+              "batchSize": 1
             }
           }
         ],
@@ -590,7 +588,7 @@
         "timeout": 6,
         "runtime": "python3.7",
         "vpc": {},
-        "versionLogicalId": "LeSqsHandlerLambdaVersionTlzuw2ag0ekWWVmfERbOsu0SVCxcZ8F1Ss7ZfNJSCE"
+        "versionLogicalId": "LeSqsHandlerLambdaVersiongPzuhPKcj6cv2Jcx62QuqR1VHOcPOoxtJlK7OJIsk4"
       }
     },
     "configValidationMode": "warn",
@@ -612,7 +610,7 @@
     "artifact": "/home/ubuntu/environment/trabalho-serverless/event-bridge/.serverless/event-filter.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/event-filter/dev/1634703848683-2021-10-20T04:24:08.683Z",
+    "artifactDirectoryName": "serverless/event-filter/dev/1635112362876-2021-10-24T21:52:42.876Z",
     "artifact": "event-filter.zip"
   }
 }

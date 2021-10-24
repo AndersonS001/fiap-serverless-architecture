@@ -52,4 +52,3 @@ functions:
                 - Ref: AWS::AccountId
                 - espera-entrega
           batchSize: 1
-          maximumBatchingWindow: 60

@@ -38,9 +38,6 @@ def leSqsHandler(event, context):
     
     print("event: {}".format(json.dumps(event)))
     
-    env = Variables()
-    sqs = SqsHandler(env.get_sqs_url())
-    
     for record in event["Records"]:
         payload=record["body"]
         print(json.dumps(payload))
